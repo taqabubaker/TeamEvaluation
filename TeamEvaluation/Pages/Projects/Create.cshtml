@@ -25,7 +25,16 @@
             </div>
             <div class="form-group">
                 <label asp-for="Project.SemesterId" class="control-label"></label>
-                <select asp-for="Project.SemesterId" class ="form-control" asp-items="ViewBag.SemesterId"></select>
+                @if (Model.SemesterId.HasValue)
+                {
+                    <select asp-for="Project.SemesterId" class="form-control" asp-items="ViewBag.SemesterId" readonly="readonly">
+                    </select>
+                }
+                else
+                {
+                    <select asp-for="Project.SemesterId" class="form-control" asp-items="ViewBag.SemesterId">
+                    </select>
+                }
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

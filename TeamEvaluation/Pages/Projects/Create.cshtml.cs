@@ -12,16 +12,26 @@ namespace TeamEvaluation.Pages.Projects
 {
     public class CreateModel : PageModel
     {
-        private readonly TeamEvaluation.DAL.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public CreateModel(TeamEvaluation.DAL.ApplicationDbContext context)
+        public CreateModel(ApplicationDbContext context)
         {
             _context = context;
         }
+        
+        public int? SemesterId { get; set; }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet(int? id)
         {
-            ViewData["SemesterId"] = new SelectList(_context.Semesters, "Id", "Name");
+            SemesterId = id;
+            if (id.HasValue)
+            {
+                ViewData["SemesterId"] = new SelectList(_context.Semesters, "Id", "Name", id);
+            }
+            else
+            {
+                ViewData["SemesterId"] = new SelectList(_context.Semesters, "Id", "Name");
+            }
             return Page();
         }
 
