@@ -1,0 +1,30 @@
+﻿@page
+@model TeamEvaluation.Pages.Projects.EvaluateModel
+@{
+    ViewData["Title"] = "Evaluate";
+}
+
+<h1>@Model.Project.Name</h1>
+<hr />
+<h4 class="text-center">Judge Name : @Model.Judge.Name</h4>
+
+<div class="row">
+    @if (!Model.Project.IsLocked)
+    {
+        <table class="table">
+            <tr>
+                <th>Team Name</th>
+            </tr>
+            @foreach (var team in Model.Project.Teams)
+            {
+                <tr><td>@team.Name</td></tr>
+            }
+        </table>
+    }
+    else
+    {
+        <div class="col-md-12 text-center alert alert-danger">
+            Project is locked, you can not evaluate it.
+        </div>
+    }
+</div>
