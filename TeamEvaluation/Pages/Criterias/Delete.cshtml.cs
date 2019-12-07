@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using TeamEvaluation.DAL;
 using TeamEvaluation.DAL.Entities;
 
-namespace TeamEvaluation.Pages.Projects
+namespace TeamEvaluation.Pages.Criterias
 {
     [Authorize]
     public class DeleteModel : PageModel
@@ -22,7 +22,7 @@ namespace TeamEvaluation.Pages.Projects
         }
 
         [BindProperty]
-        public Project Project { get; set; }
+        public Criteria Criteria { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -31,10 +31,9 @@ namespace TeamEvaluation.Pages.Projects
                 return NotFound();
             }
 
-            Project = await _context.Projects
-                .Include(p => p.Semester).FirstOrDefaultAsync(m => m.Id == id);
+            Criteria = await _context.Criterias.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Project == null)
+            if (Criteria == null)
             {
                 return NotFound();
             }
@@ -48,11 +47,11 @@ namespace TeamEvaluation.Pages.Projects
                 return NotFound();
             }
 
-            Project = await _context.Projects.FindAsync(id);
+            Criteria = await _context.Criterias.FindAsync(id);
 
-            if (Project != null)
+            if (Criteria != null)
             {
-                _context.Projects.Remove(Project);
+                _context.Criterias.Remove(Criteria);
                 await _context.SaveChangesAsync();
             }
 

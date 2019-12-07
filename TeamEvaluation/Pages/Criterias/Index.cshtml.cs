@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using TeamEvaluation.DAL;
 using TeamEvaluation.DAL.Entities;
 
-namespace TeamEvaluation.Pages.Projects
+namespace TeamEvaluation.Pages.Criterias
 {
     [Authorize]
     public class IndexModel : PageModel
@@ -21,12 +21,11 @@ namespace TeamEvaluation.Pages.Projects
             _context = context;
         }
 
-        public IList<Project> Project { get;set; }
+        public IList<Criteria> Criteria { get;set; }
 
         public async Task OnGetAsync()
         {
-            Project = await _context.Projects
-                .Include(p => p.Semester).ToListAsync();
+            Criteria = await _context.Criterias.ToListAsync();
         }
     }
 }

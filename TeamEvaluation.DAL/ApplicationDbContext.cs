@@ -17,5 +17,21 @@ namespace TeamEvaluation.DAL
         public DbSet<Project> Projects { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<ProjectCriteria> ProjectsCriterias { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<ProjectCriteria>()
+                .HasKey(pc => new { pc.ProjectId, pc.CriteriaId });
+            modelBuilder.Entity<ProjectCriteria>()
+                .HasOne(pc => pc.Project)
+                .WithMany(p => p.ProjectsCriterias)
+                .HasForeignKey(bc => bc.ProjectId);
+            modelBuilder.Entity<ProjectCriteria>()
+                .HasOne(pc => pc.Criteria)
+                .WithMany(c => c.ProjectsCriterias)
+                .HasForeignKey(bc => bc.CriteriaId);
+        }
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using TeamEvaluation.DAL;
 using TeamEvaluation.DAL.Entities;
 
-namespace TeamEvaluation.Pages.Teams
+namespace TeamEvaluation.Pages.Criterias
 {
     [Authorize]
     public class EditModel : PageModel
@@ -23,7 +23,7 @@ namespace TeamEvaluation.Pages.Teams
         }
 
         [BindProperty]
-        public Team Team { get; set; }
+        public Criteria Criteria { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -32,14 +32,12 @@ namespace TeamEvaluation.Pages.Teams
                 return NotFound();
             }
 
-            Team = await _context.Teams
-                .Include(t => t.Project).FirstOrDefaultAsync(m => m.Id == id);
+            Criteria = await _context.Criterias.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Team == null)
+            if (Criteria == null)
             {
                 return NotFound();
             }
-           ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Id");
             return Page();
         }
 
@@ -52,7 +50,7 @@ namespace TeamEvaluation.Pages.Teams
                 return Page();
             }
 
-            _context.Attach(Team).State = EntityState.Modified;
+            _context.Attach(Criteria).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +58,7 @@ namespace TeamEvaluation.Pages.Teams
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TeamExists(Team.Id))
+                if (!CriteriaExists(Criteria.Id))
                 {
                     return NotFound();
                 }
@@ -73,9 +71,9 @@ namespace TeamEvaluation.Pages.Teams
             return RedirectToPage("./Index");
         }
 
-        private bool TeamExists(int id)
+        private bool CriteriaExists(int id)
         {
-            return _context.Teams.Any(e => e.Id == id);
+            return _context.Criterias.Any(e => e.Id == id);
         }
     }
 }

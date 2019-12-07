@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using TeamEvaluation.DAL;
 using TeamEvaluation.DAL.Entities;
 
-namespace TeamEvaluation.Pages.Teams
+namespace TeamEvaluation.Pages.Criterias
 {
     [Authorize]
     public class DetailsModel : PageModel
@@ -21,7 +21,7 @@ namespace TeamEvaluation.Pages.Teams
             _context = context;
         }
 
-        public Team Team { get; set; }
+        public Criteria Criteria { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,10 +30,9 @@ namespace TeamEvaluation.Pages.Teams
                 return NotFound();
             }
 
-            Team = await _context.Teams
-                .Include(t => t.Project).FirstOrDefaultAsync(m => m.Id == id);
+            Criteria = await _context.Criterias.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Team == null)
+            if (Criteria == null)
             {
                 return NotFound();
             }

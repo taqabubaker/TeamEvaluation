@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TeamEvaluation.DAL;
@@ -10,6 +11,7 @@ using TeamEvaluation.DAL.Entities;
 
 namespace TeamEvaluation.Pages.Semesters
 {
+    [Authorize]
     public class AddProjectModel : PageModel
     {
         private readonly ApplicationDbContext _context;

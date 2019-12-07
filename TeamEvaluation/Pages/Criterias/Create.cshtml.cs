@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using TeamEvaluation.DAL;
 using TeamEvaluation.DAL.Entities;
 
-namespace TeamEvaluation.Pages.Teams
+namespace TeamEvaluation.Pages.Criterias
 {
     [Authorize]
     public class CreateModel : PageModel
@@ -21,24 +21,13 @@ namespace TeamEvaluation.Pages.Teams
             _context = context;
         }
 
-        public int? ProjectId { get; set; }
-
-        public IActionResult OnGet(int? id)
+        public IActionResult OnGet()
         {
-            if (id.HasValue)
-            {
-                ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Name", id);
-            }
-            else
-            {
-                ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Name");
-            }
-                   
             return Page();
         }
 
         [BindProperty]
-        public Team Team { get; set; }
+        public Criteria Criteria { get; set; }
 
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
@@ -49,7 +38,7 @@ namespace TeamEvaluation.Pages.Teams
                 return Page();
             }
 
-            _context.Teams.Add(Team);
+            _context.Criterias.Add(Criteria);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
