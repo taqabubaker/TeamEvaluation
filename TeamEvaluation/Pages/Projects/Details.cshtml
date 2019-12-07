@@ -41,22 +41,10 @@
                 <dt class="col-sm-3">
                     @Html.DisplayNameFor(model => model.Project.JudgesCount)
                 </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.Project.JudgesCount)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Project.Averages)
-                </dt>
-                <dd class="col-sm-10">
-                    @foreach (var item in Model.Project.Averages)
-                    {
-                        @item.Key <text> : </text> @item.Value<br />
-                    }
-                </dd>
             </dl>
         </div>
         <div class="col-md-6" style="display:none" id="dvlink">
-            <input type="text" id="txtLink" class="form-control col-md-8" style="float:left" value="@Url.Content("~/projects/details/"+Model.Project.Id)" readonly />
+            <input type="text" id="txtLink" class="form-control col-md-8" style="float:left" value="@Url.Content($"~/projects/judge/?id={Model.Project.Id}")" readonly />
             <button class="btn btn-success" type="button" onclick="$('#dvlink').hide()" style="float:right">Done</button>
             <button type="button" onclick="copy()" class="btn btn-link text-info" style="float:right">copy link</button>
         </div>
