@@ -4,9 +4,9 @@
     ViewData["Title"] = "Evaluate";
 }
 
-<h1>Evaluate @Model.Project.Name</h1>
+<h1>@Model.Project.Name</h1>
 <hr />
-<h3>Judge @Model.Judge.Name</h3>
+<h4 class="text-center">Judge Name : @Model.Judge.Name</h4>
 
 <div class="row">
     @if (!Model.Project.IsLocked)

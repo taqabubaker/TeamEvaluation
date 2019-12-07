@@ -40,7 +40,7 @@ namespace TeamEvaluation.Pages.Projects
             _context.Judges.Add(Judge);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage($"./evaluate?jid={Judge.Id}&pid={id}");
+            return RedirectToPage($"./evaluate", new { jid = Judge.Id, pid = id });
         }
     }
 }
