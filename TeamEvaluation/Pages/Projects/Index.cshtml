@@ -38,9 +38,10 @@
                 @Html.DisplayFor(modelItem => item.Semester.Name)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
+                <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
+                <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                <a asp-page="/teams/create" asp-route-id="@item.Id" class="btn btn-link">Add Team</a>
             </td>
         </tr>
 }

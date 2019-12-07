@@ -10,8 +10,8 @@ using TeamEvaluation.DAL;
 namespace TeamEvaluation.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191207022641_ProjectName_Required")]
-    partial class ProjectName_Required
+    [Migration("20191207040110_m-m-2")]
+    partial class mm2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -265,18 +265,15 @@ namespace TeamEvaluation.DAL.Migrations
 
             modelBuilder.Entity("TeamEvaluation.DAL.Entities.ProjectCriteria", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
 
                     b.Property<int>("CriteriaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
+                    b.HasKey("ProjectId", "CriteriaId");
 
-                    b.HasKey("Id");
+                    b.HasIndex("CriteriaId");
 
                     b.ToTable("ProjectsCriterias");
                 });
@@ -373,8 +370,23 @@ namespace TeamEvaluation.DAL.Migrations
             modelBuilder.Entity("TeamEvaluation.DAL.Entities.Project", b =>
                 {
                     b.HasOne("TeamEvaluation.DAL.Entities.Semester", "Semester")
-                        .WithMany()
+                        .WithMany("Projects")
                         .HasForeignKey("SemesterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TeamEvaluation.DAL.Entities.ProjectCriteria", b =>
+                {
+                    b.HasOne("TeamEvaluation.DAL.Entities.Criteria", "Criteria")
+                        .WithMany("ProjectsCriterias")
+                        .HasForeignKey("CriteriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TeamEvaluation.DAL.Entities.Project", "Project")
+                        .WithMany("ProjectsCriterias")
+                        .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -382,7 +394,7 @@ namespace TeamEvaluation.DAL.Migrations
             modelBuilder.Entity("TeamEvaluation.DAL.Entities.Team", b =>
                 {
                     b.HasOne("TeamEvaluation.DAL.Entities.Project", "Project")
-                        .WithMany()
+                        .WithMany("Teams")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

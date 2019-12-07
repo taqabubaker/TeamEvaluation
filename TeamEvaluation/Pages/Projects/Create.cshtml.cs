@@ -18,8 +18,9 @@ namespace TeamEvaluation.Pages.Projects
         {
             _context = context;
         }
-        
+
         public int? SemesterId { get; set; }
+        public List<Criteria> Criterias { get; set; }
 
         public IActionResult OnGet(int? id)
         {
@@ -32,6 +33,9 @@ namespace TeamEvaluation.Pages.Projects
             {
                 ViewData["SemesterId"] = new SelectList(_context.Semesters, "Id", "Name");
             }
+
+            ViewData["Criterias"] = new MultiSelectList(_context.Criterias, "Id", "Name");
+
             return Page();
         }
 
@@ -47,8 +51,32 @@ namespace TeamEvaluation.Pages.Projects
                 return Page();
             }
 
-            _context.Projects.Add(Project);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var selectedValues = Request.Form["Criterias"];
+                var selectedCriterias = selectedValues.ToString().Split(',');
+
+                var projectsCriterias = new List<ProjectCriteria>();
+
+                if (selectedCriterias.Length > 0)
+                {
+                    foreach (var criteria in selectedCriterias)
+                    {
+                        projectsCriterias.Add(new ProjectCriteria()
+                        {
+                            CriteriaId = Convert.ToInt32(criteria)
+                        });
+                    }
+                    Project.ProjectsCriterias = projectsCriterias;
+                }
+                
+                _context.Projects.Add(Project);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
             return RedirectToPage("./Index");
         }

@@ -19,9 +19,19 @@ namespace TeamEvaluation.Pages.Teams
             _context = context;
         }
 
-        public IActionResult OnGet()
+        public int? ProjectId { get; set; }
+
+        public IActionResult OnGet(int? id)
         {
-        ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Name");
+            if (id.HasValue)
+            {
+                ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Name", id);
+            }
+            else
+            {
+                ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Name");
+            }
+                   
             return Page();
         }
 

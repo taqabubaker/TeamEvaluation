@@ -9,5 +9,6 @@ namespace TeamEvaluation.DAL.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public int Weight { get; set; }
+        public virtual ICollection<ProjectCriteria> ProjectsCriterias { get; set; } = new List<ProjectCriteria>();
     }
 }

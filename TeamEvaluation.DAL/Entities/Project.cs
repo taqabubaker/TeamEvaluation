@@ -19,5 +19,6 @@ namespace TeamEvaluation.DAL.Entities
         public int SemesterId { get; set; }        
         public Semester Semester { get; set; }
         public List<Team> Teams { get; set; }
+        public virtual ICollection<ProjectCriteria> ProjectsCriterias { get; set; } = new List<ProjectCriteria>();
     }
 }

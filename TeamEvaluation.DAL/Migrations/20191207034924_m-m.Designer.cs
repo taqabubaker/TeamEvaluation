@@ -10,8 +10,8 @@ using TeamEvaluation.DAL;
 namespace TeamEvaluation.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191207002430_init")]
-    partial class init
+    [Migration("20191207034924_m-m")]
+    partial class mm
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -231,10 +231,15 @@ namespace TeamEvaluation.DAL.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ProjectId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Weight")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("Criterias");
                 });
@@ -247,6 +252,7 @@ namespace TeamEvaluation.DAL.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SemesterId")
@@ -260,24 +266,6 @@ namespace TeamEvaluation.DAL.Migrations
                     b.HasIndex("SemesterId");
 
                     b.ToTable("Projects");
-                });
-
-            modelBuilder.Entity("TeamEvaluation.DAL.Entities.ProjectCriteria", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CriteriaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProjectsCriterias");
                 });
 
             modelBuilder.Entity("TeamEvaluation.DAL.Entities.Semester", b =>
@@ -369,10 +357,17 @@ namespace TeamEvaluation.DAL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TeamEvaluation.DAL.Entities.Criteria", b =>
+                {
+                    b.HasOne("TeamEvaluation.DAL.Entities.Project", null)
+                        .WithMany("Criterias")
+                        .HasForeignKey("ProjectId");
+                });
+
             modelBuilder.Entity("TeamEvaluation.DAL.Entities.Project", b =>
                 {
                     b.HasOne("TeamEvaluation.DAL.Entities.Semester", "Semester")
-                        .WithMany()
+                        .WithMany("Projects")
                         .HasForeignKey("SemesterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -381,7 +376,7 @@ namespace TeamEvaluation.DAL.Migrations
             modelBuilder.Entity("TeamEvaluation.DAL.Entities.Team", b =>
                 {
                     b.HasOne("TeamEvaluation.DAL.Entities.Project", "Project")
-                        .WithMany()
+                        .WithMany("Teams")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
