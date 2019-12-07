@@ -25,6 +25,8 @@ namespace TeamEvaluation.Pages.Projects
         [BindProperty]
         public Project Project { get; set; }
 
+        public List<Criteria> Criterias { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -33,13 +35,16 @@ namespace TeamEvaluation.Pages.Projects
             }
 
             Project = await _context.Projects
-                .Include(p => p.Semester).FirstOrDefaultAsync(m => m.Id == id);
+                .Include(p => p.Semester)
+                .Include(pc => pc.ProjectsCriterias)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (Project == null)
             {
                 return NotFound();
             }
-           ViewData["SemesterId"] = new SelectList(_context.Semesters, "Id", "Id");
+            ViewData["SemesterId"] = new SelectList(_context.Semesters, "Id", "Name");
+            ViewData["Criterias"] = new MultiSelectList(_context.Criterias, "Id", "Name", Project.ProjectsCriterias.Select(pc => pc.CriteriaId));
             return Page();
         }
 
@@ -50,6 +55,23 @@ namespace TeamEvaluation.Pages.Projects
             if (!ModelState.IsValid)
             {
                 return Page();
+            }
+
+            var selectedValues = Request.Form["Criterias"];
+            var selectedCriterias = selectedValues.ToString().Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+            var projectsCriterias = new List<ProjectCriteria>();
+
+            if (selectedCriterias?.Length > 0)
+            {
+                foreach (var criteria in selectedCriterias)
+                {
+                    projectsCriterias.Add(new ProjectCriteria()
+                    {
+                        CriteriaId = Convert.ToInt32(criteria)
+                    });
+                }
+                Project.ProjectsCriterias = projectsCriterias;
             }
 
             _context.Attach(Project).State = EntityState.Modified;
