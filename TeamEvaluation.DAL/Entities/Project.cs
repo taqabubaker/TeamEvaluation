@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Text;
 
 namespace TeamEvaluation.DAL.Entities
@@ -24,15 +25,16 @@ namespace TeamEvaluation.DAL.Entities
         public virtual ICollection<ProjectCriteria> ProjectsCriterias { get; set; } = new List<ProjectCriteria>();
 
 
-        public virtual ICollection<Judge> Judges { get; set; }
+        public virtual ICollection<Grade> Grades { get; set; }
 
 
         [NotMapped]
-        public int JudgesCount
+        [Display(Name="Total Grades")]
+        public int TotalGrades
         {
             get
             {
-                return Judges?.Count ?? 0;
+                return Grades?.ToList().Sum(i => i.Value) ?? 0;
             }
         }
 

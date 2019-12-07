@@ -72,7 +72,7 @@ namespace TeamEvaluation.Pages.Projects
                 throw;
             }
 
-            return RedirectToPage("./evaluate", new { jid, pid });
+            return RedirectToPage("./details", new { id = pid });
         }
     }
 }
