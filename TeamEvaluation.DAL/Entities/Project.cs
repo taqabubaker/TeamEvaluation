@@ -8,7 +8,12 @@ namespace TeamEvaluation.DAL.Entities
     public class Project
     {
         public int Id { get; set; }
+
+        [Required]
+        //[StringLength(255,MinimumLength = 3)]
         public string Name { get; set; }
+
+        [Required]
         public int Weight { get; set; }
         [Display(Name = "Semester")]
         public int SemesterId { get; set; }        

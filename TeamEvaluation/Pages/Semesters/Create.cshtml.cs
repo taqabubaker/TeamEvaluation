@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using TeamEvaluation.DAL;
 using TeamEvaluation.DAL.Entities;
 
@@ -14,9 +13,9 @@ namespace TeamEvaluation.Pages.Semesters
     [Authorize]
     public class CreateModel : PageModel
     {
-        private readonly TeamEvaluation.DAL.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public CreateModel(TeamEvaluation.DAL.ApplicationDbContext context)
+        public CreateModel(ApplicationDbContext context)
         {
             _context = context;
         }
