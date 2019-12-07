@@ -1,0 +1,41 @@
+﻿@page
+@model TeamEvaluation.Pages.Projects.GradesModel
+@{
+    ViewData["Title"] = "Grades";
+}
+
+<h1>@Model.Project.Name</h1>
+<hr />
+<h4 class="text-center">Judge Name : @Model.Judge.Name</h4>
+
+<div class="row">
+    @if (!Model.Project.IsLocked)
+    {
+        <form method="post">
+            <table class="table">
+                <tr>
+                    <th>Criteria</th>
+                </tr>
+                @foreach (var criteria in Model.Project.ProjectsCriterias.Select(i => i.Criteria))
+                {
+                    <tr>
+                        <td>
+                            @criteria.Name
+                        </td>
+                        <td class=col-md-4>
+                            <input type="number" min="0" max="10" value="0" name="txt_@criteria.Id" class="form-control" />
+                        </td>
+                    </tr>
+                }
+            </table>
+            <button type="submit" class="btn btn-success">Save</button>
+        </form>
+    }
+    else
+    {
+        <div class="col-md-12 text-center alert alert-danger">
+            Project is locked, you can not evaluate it.
+        </div>
+    }
+</div>
+

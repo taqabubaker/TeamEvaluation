@@ -237,6 +237,37 @@ namespace TeamEvaluation.DAL.Migrations
                     b.ToTable("Criterias");
                 });
 
+            modelBuilder.Entity("TeamEvaluation.DAL.Entities.Grade", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CriteriaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("JudgeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Value")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CriteriaId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Grades");
+                });
+
             modelBuilder.Entity("TeamEvaluation.DAL.Entities.Judge", b =>
                 {
                     b.Property<int>("Id")
@@ -384,6 +415,21 @@ namespace TeamEvaluation.DAL.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TeamEvaluation.DAL.Entities.Grade", b =>
+                {
+                    b.HasOne("TeamEvaluation.DAL.Entities.Criteria", "Criteria")
+                        .WithMany()
+                        .HasForeignKey("CriteriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TeamEvaluation.DAL.Entities.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
