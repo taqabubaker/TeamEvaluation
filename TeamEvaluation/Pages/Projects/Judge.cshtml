@@ -7,6 +7,8 @@
 <h1>@Model.Project.Name</h1>
 
 <div class="row">
+    @if (!Model.Project.IsLocked)
+    {
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -21,4 +23,11 @@
             </div>
         </form>
     </div>
+    }
+    else
+    {
+        <div class="col-md-12 text-center alert alert-danger">
+            Project is locked, you can not evaluate it.
+        </div>
+    }
 </div>
