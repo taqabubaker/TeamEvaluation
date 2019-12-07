@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using TeamEvaluation.DAL;
 using TeamEvaluation.DAL.Entities;
 
-namespace TeamEvaluation.Pages.Projects
+namespace TeamEvaluation.Pages.Criterias
 {
     public class CreateModel : PageModel
     {
@@ -21,13 +21,11 @@ namespace TeamEvaluation.Pages.Projects
 
         public IActionResult OnGet()
         {
-            ViewData["SemesterId"] = new SelectList(_context.Semesters, "Id", "Name");
-            ViewData["Criterias"] = new SelectList(_context.Criterias, "Id", "Name");
             return Page();
         }
 
         [BindProperty]
-        public Project Project { get; set; }
+        public Criteria Criteria { get; set; }
 
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
@@ -38,7 +36,7 @@ namespace TeamEvaluation.Pages.Projects
                 return Page();
             }
 
-            _context.Projects.Add(Project);
+            _context.Criterias.Add(Criteria);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
