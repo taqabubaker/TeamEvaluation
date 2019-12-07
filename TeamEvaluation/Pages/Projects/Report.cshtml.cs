@@ -42,39 +42,25 @@ namespace TeamEvaluation.Pages.Projects
             if (teamId.HasValue)
             {
                 Grades = _context.Grades
-                    .Include(c => c.Criteria)
                     .Where(g => g.TeamId == teamId && g.ProjectId == Project.Id)
+                    .Include(c => c.Criteria)
                     .ToList();
             }
             else
             {
                 Grades = _context.Grades
                     .Where(g => g.ProjectId == Project.Id)
+                    .Include(i => i.Criteria)
                     .ToList();
             }
 
             return Page();
         }
+    }
 
-        public IActionResult OnStates(int? teamId)
-        {
-            Grades = new List<Grade>();
-
-            if (teamId.HasValue)
-            {
-                Grades = _context.Grades
-                    .Include(c => c.Criteria)
-                    .Where(g => g.TeamId == teamId && g.ProjectId == Project.Id)
-                    .ToList();
-            }
-            else
-            {
-                Grades = _context.Grades
-                    .Where(g => g.ProjectId == Project.Id)
-                    .ToList();
-            }
-
-            return Page();
-        }
+    public class GroupVM
+    {
+        public int Criteria { get; set; }
+        public int Values { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TeamEvaluation.DAL.Migrations
 {
-    public partial class fixInit : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,17 +47,30 @@ namespace TeamEvaluation.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProjectsCriterias",
+                name: "Criterias",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProjectId = table.Column<int>(nullable: false),
-                    CriteriaId = table.Column<int>(nullable: false)
+                    Name = table.Column<string>(nullable: true),
+                    Weight = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProjectsCriterias", x => x.Id);
+                    table.PrimaryKey("PK_Criterias", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Judges",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Judges", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -187,7 +200,8 @@ namespace TeamEvaluation.DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: false),
                     Weight = table.Column<int>(nullable: false),
-                    SemesterId = table.Column<int>(nullable: false)
+                    SemesterId = table.Column<int>(nullable: false),
+                    IsLocked = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -201,24 +215,56 @@ namespace TeamEvaluation.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Criterias",
+                name: "Grades",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Weight = table.Column<int>(nullable: false),
-                    ProjectId = table.Column<int>(nullable: true)
+                    ProjectId = table.Column<int>(nullable: false),
+                    TeamId = table.Column<int>(nullable: false),
+                    JudgeId = table.Column<int>(nullable: false),
+                    CriteriaId = table.Column<int>(nullable: false),
+                    Value = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Criterias", x => x.Id);
+                    table.PrimaryKey("PK_Grades", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Criterias_Projects_ProjectId",
+                        name: "FK_Grades_Criterias_CriteriaId",
+                        column: x => x.CriteriaId,
+                        principalTable: "Criterias",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Grades_Projects_ProjectId",
                         column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProjectsCriterias",
+                columns: table => new
+                {
+                    ProjectId = table.Column<int>(nullable: false),
+                    CriteriaId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProjectsCriterias", x => new { x.ProjectId, x.CriteriaId });
+                    table.ForeignKey(
+                        name: "FK_ProjectsCriterias_Criterias_CriteriaId",
+                        column: x => x.CriteriaId,
+                        principalTable: "Criterias",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProjectsCriterias_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -282,14 +328,24 @@ namespace TeamEvaluation.DAL.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Criterias_ProjectId",
-                table: "Criterias",
+                name: "IX_Grades_CriteriaId",
+                table: "Grades",
+                column: "CriteriaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Grades_ProjectId",
+                table: "Grades",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Projects_SemesterId",
                 table: "Projects",
                 column: "SemesterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProjectsCriterias_CriteriaId",
+                table: "ProjectsCriterias",
+                column: "CriteriaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Teams_ProjectId",
@@ -315,7 +371,10 @@ namespace TeamEvaluation.DAL.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Criterias");
+                name: "Grades");
+
+            migrationBuilder.DropTable(
+                name: "Judges");
 
             migrationBuilder.DropTable(
                 name: "ProjectsCriterias");
@@ -328,6 +387,9 @@ namespace TeamEvaluation.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Criterias");
 
             migrationBuilder.DropTable(
                 name: "Projects");

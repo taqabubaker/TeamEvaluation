@@ -10,8 +10,8 @@ using TeamEvaluation.DAL;
 namespace TeamEvaluation.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191207080338_ProjectGrades")]
-    partial class ProjectGrades
+    [Migration("20191207081815_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
