@@ -29,9 +29,14 @@
                 <select asp-for="Project.SemesterId" class="form-control" asp-items="ViewBag.SemesterId"></select>
                 <span asp-validation-for="Project.SemesterId" class="text-danger"></span>
             </div>
-            <div>
+            <div class="form-group">
                 <label asp-for="Criterias" class="control-label"></label>
                 <select asp-for="Criterias" class="form-control" asp-items="ViewBag.Criterias"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.IsLocked" class="control-label"></label>
+                <input asp-for="Project.IsLocked" class="form-check" />
+                <span asp-validation-for="Project.IsLocked" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

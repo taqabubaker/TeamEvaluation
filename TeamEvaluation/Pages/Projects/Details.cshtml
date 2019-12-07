@@ -6,9 +6,18 @@
 }
 <div>
     <div>
-        <div style="float:right">
-            <button class="btn btn-info" type="button" onclick="$('#dvlink').show()">Share</button>
-        </div>
+        @if (Model.Project.IsLocked)
+        {
+            <div style="float:right">
+                <p class="text-danger">You can't share project because it is Locked!</p>
+            </div>
+        }
+        else
+        {
+            <div style="float:right">
+                <button class="btn btn-info" type="button" onclick="$('#dvlink').show()">Share</button>
+            </div>
+        }
         <div>
             <h4>@Model.Project.Name</h4>
         </div>
@@ -23,7 +32,6 @@
                 </dt>
                 <dd class="col-sm-10">
                     <a asp-page="./Report" asp-route-id="@Model.Project.Id">@Model.Project.Name</a>
-
                 </dd>
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.Project.Weight)
@@ -45,13 +53,10 @@
                     @Html.DisplayFor(model => model.Project.JudgesCount)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Project.Averages)
+                    @Html.DisplayNameFor(model => model.Project.IsLocked)
                 </dt>
                 <dd class="col-sm-10">
-                    @foreach (var item in Model.Project.Averages)
-                    {
-                        @item.Key <text> : </text> @item.Value<br />
-                    }
+                    @Html.DisplayFor(model => model.Project.IsLocked)
                 </dd>
             </dl>
         </div>

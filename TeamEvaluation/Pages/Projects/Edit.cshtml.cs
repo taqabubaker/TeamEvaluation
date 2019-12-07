@@ -68,9 +68,11 @@ namespace TeamEvaluation.Pages.Projects
                 {
                     projectsCriterias.Add(new ProjectCriteria()
                     {
-                        CriteriaId = Convert.ToInt32(criteria)
+                        CriteriaId = Convert.ToInt32(criteria),
+                        ProjectId = Project.Id
                     });
                 }
+                
                 Project.ProjectsCriterias = projectsCriterias;
             }
 
