@@ -19,7 +19,7 @@
                     }
                 </div>
                 @{
-                    var total = default(decimal);
+                    var total = default(double);
                 }
                 <table class="table table-hover">
                     <thead>
@@ -43,18 +43,18 @@
                         {
                             <tr>
                                 <td>@g.Criteria.Name</td>
-                                <td>@g.Value</td>
+                                <td>@g.Value%</td>
                                 <td>@g.Criteria.Weight</td>
-                                <td>@(g.Value * g.Criteria.Weight)</td>
+                                <td>@((g.Value * g.Criteria.Weight * 0.01).ToString("0.0"))</td>
                             </tr>
                             { 
-                                total += (g.Value * g.Criteria.Weight);
+                                total += (g.Value * g.Criteria.Weight * 0.01);
                             }
                         }
                     </tbody>
                 </table>
                 <div class="text-right">
-                    <label>Total: @total</label>
+                    <label>Total: @total.ToString("0.0")%</label>
                 </div>
             </div>
         </div>
