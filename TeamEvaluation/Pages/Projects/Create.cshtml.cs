@@ -36,7 +36,8 @@ namespace TeamEvaluation.Pages.Projects
                 ViewData["SemesterId"] = new SelectList(_context.Semesters, "Id", "Name");
             }
 
-            ViewData["Criterias"] = new MultiSelectList(_context.Criterias, "Id", "Name");
+            //ViewData["Criterias"] = new MultiSelectList(_context.Criterias, "Id", "Name");
+            ViewData["Criterias"] = _context.Criterias.Select(i => new SelectListItem() { Text = i.Name + i.Weight, Value=i.Id.ToString()});
 
             return Page();
         }

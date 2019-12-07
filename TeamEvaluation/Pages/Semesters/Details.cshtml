@@ -21,10 +21,29 @@
 </div>
 <br />
 <h3>Semester's Projects</h3>
-<div>
+<div class="row">
     @foreach (var project in Model.Semester.Projects.OrderByDescending(x => x.Id))
     {
-        <span class="badge badge-primary">@project.Name</span>
+        <div class="col-md-12">
+            <div class="badge badge-primary">@project.Name</div>
+            <div class="row">
+                @foreach (var team in project.Teams)
+                {
+                    <div class="col-md-4">
+                        <table class="table">
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => team.Name)</th>
+                                <th>@Html.DisplayNameFor(model => team.Members)</th>
+                            </tr>
+                            <tr>
+                                <td>@team.Name</td>
+                                <td>@team.Members</td>
+                            </tr>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
     }
 </div>
 <br />
