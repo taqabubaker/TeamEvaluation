@@ -33,6 +33,7 @@ namespace TeamEvaluation.Pages.Projects
             Project = await _context.Projects
                 .Include(p => p.Semester)
                 .Include(t => t.Teams)
+                .Include("ProjectsCriterias.Criteria")
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (Project == null)
