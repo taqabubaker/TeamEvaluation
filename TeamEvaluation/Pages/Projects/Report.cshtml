@@ -9,7 +9,7 @@
 <hr />
 <div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <dl class="row">
                 <dt class="col-sm-3">
                     @Html.DisplayNameFor(model => model.Project.JudgesCount)
@@ -18,23 +18,38 @@
                     @Html.DisplayFor(model => model.Project.JudgesCount)
 
                 </dd>
-                <dt class="col-sm-2">
+                <dt class="col-md-2">
                     @Html.DisplayNameFor(model => model.Project.Averages)
                 </dt>
-                <dd class="col-sm-10">
-                    <table class="table">
-                        <tr>
-                            <th>Team</th>
-                            <th>Avg.</th>
-                        </tr>
+                <dd class="col-md-10">
+                    <div class="row">
                         @foreach (var item in Model.Project.Averages)
                         {
-                            <tr>
-                                <td>@item.Key</td>
-                                <td>@item.Value</td>
-                            </tr>
+                            <div class="col-md-4">
+                                <table class="table">
+                                    <tr>
+                                        <th>Criteria</th>
+                                        <th>Teams</th>
+                                    </tr>
+                                    <tr>
+                                        <td>@item.Key</td>
+                                        <td>
+                                            <table class="table">
+                                                <tr><th>Team</th><th>Avg.</th></tr>
+                                                @foreach (var team in item.Value)
+                                                {
+                                                    <tr>
+                                                        <td>@team.Key</td>
+                                                        <td>@team.Value</td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                         }
-                    </table>
+                    </div>
                 </dd>
             </dl>
         </div>
