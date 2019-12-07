@@ -21,10 +21,11 @@ namespace TeamEvaluation.DAL.Entities
         public Semester Semester { get; set; }
         public List<Team> Teams { get; set; }
         public bool IsLocked { get; set; }
-        public virtual ICollection<ProjectCriteria> ProjectsCriterias { get; set; } = new List<ProjectCriteria>();
+        public virtual List<ProjectCriteria> ProjectsCriterias { get; set; } = new List<ProjectCriteria>();
 
 
         public virtual ICollection<Judge> Judges { get; set; }
+        public virtual List<Grade> Grades { get; set; }
 
 
         [NotMapped]
@@ -49,7 +50,7 @@ namespace TeamEvaluation.DAL.Entities
                     avgTeams.Add("team 1", 87.3M);
                     avgTeams.Add("team 2", 74.8M);
                     avgTeams.Add("team 3", 98M);
-                    criterias.Add($"criteria_{x }", avgTeams);
+                    criterias.Add($"criteria_{x}", avgTeams);
                 }
                 return criterias;
             }

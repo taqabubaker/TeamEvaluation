@@ -10,48 +10,86 @@
 <div>
     <div class="row">
         <div class="col-md-12">
-            <dl class="row">
-                <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.Project.JudgesCount)
-                </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.Project.JudgesCount)
+            @*<dl class="row">
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Project.JudgesCount)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Project.JudgesCount)
 
-                </dd>
-                <dt class="col-md-2">
-                    @Html.DisplayNameFor(model => model.Project.Averages)
-                </dt>
-                <dd class="col-md-10">
-                    <div class="row">
-                        @foreach (var item in Model.Project.Averages)
+                    </dd>
+                    <dt class="col-md-2">
+                        @Html.DisplayNameFor(model => model.Project.Averages)
+                    </dt>
+                    <dd class="col-md-10">
+                        <div class="row">
+                            @foreach (var item in Model.Project.Averages)
+                            {
+                                <div class="col-md-4">
+                                    <table class="table">
+                                        <tr>
+                                            <th>Criteria</th>
+                                            <th>Teams</th>
+                                        </tr>
+                                        <tr>
+                                            <td>@item.Key</td>
+                                            <td>
+                                                <table class="table">
+                                                    <tr><th>Team</th><th>Avg.</th></tr>
+                                                    @foreach (var team in item.Value)
+                                                    {
+                                                        <tr>
+                                                            <td>@team.Key</td>
+                                                            <td>@team.Value</td>
+                                                        </tr>
+                                                    }
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            }
+                        </div>
+                    </dd>
+                </dl>*@
+            <div>
+                <div class="text-center">
+                    <a asp-page="./Report" class="btn btn-link">All</a>
+                    @foreach (var pc in Model.Project.Teams)
+                    {
+                        <a asp-page="./Report" asp-page-handler="States" asp-route-teamId="@pc.Id" class="btn btn-link">@pc.Name</a>
+                    }
+                </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Grades[0].Criteria.Name)
+                            </th>
+                            <th>
+                                Avg. Score
+                            </th>
+                            <th>
+                                Weight
+                            </th>
+                            <th>
+                                Weight Avg.
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var grade in Model.Grades)
                         {
-                            <div class="col-md-4">
-                                <table class="table">
-                                    <tr>
-                                        <th>Criteria</th>
-                                        <th>Teams</th>
-                                    </tr>
-                                    <tr>
-                                        <td>@item.Key</td>
-                                        <td>
-                                            <table class="table">
-                                                <tr><th>Team</th><th>Avg.</th></tr>
-                                                @foreach (var team in item.Value)
-                                                {
-                                                    <tr>
-                                                        <td>@team.Key</td>
-                                                        <td>@team.Value</td>
-                                                    </tr>
-                                                }
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
+                            <tr>
+                                <td>@grade.Criteria.Name</td>
+                                <td>@grade.Value</td>
+                                <td>@grade.Criteria.Weight</td>
+                                <td>@(grade.Value * grade.Criteria.Weight)</td>
+                            </tr>
                         }
-                    </div>
-                </dd>
-            </dl>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
