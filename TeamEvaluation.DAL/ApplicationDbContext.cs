@@ -16,6 +16,7 @@ namespace TeamEvaluation.DAL
         public DbSet<Semester> Semesters { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Team> Teams { get; set; }
+        public DbSet<Judge> Judges { get; set; }
         public DbSet<ProjectCriteria> ProjectsCriterias { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

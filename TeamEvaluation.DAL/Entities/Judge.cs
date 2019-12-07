@@ -10,13 +10,8 @@ namespace TeamEvaluation.DAL.Entities
         [Key]
         public int Id { get; set; }
 
+        [Display(Name = "Judge Name")]
         public string Name { get; set; }
-
-        public int ProjectId { get; set; }
-
-        public decimal Evaluation { get; set; }
-        public virtual Project Project { get; set; }
-
 
     }
 }
