@@ -12,9 +12,9 @@ namespace TeamEvaluation.Pages.Projects
 {
     public class DetailsModel : PageModel
     {
-        private readonly TeamEvaluation.DAL.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public DetailsModel(TeamEvaluation.DAL.ApplicationDbContext context)
+        public DetailsModel(ApplicationDbContext context)
         {
             _context = context;
         }

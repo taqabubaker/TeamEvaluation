@@ -22,7 +22,8 @@
                     @Html.DisplayNameFor(model => model.Project.Name)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Project.Name)
+                    <a asp-page="./Report" asp-route-id="@Model.Project.Id">@Model.Project.Name</a>
+
                 </dd>
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.Project.Weight)
@@ -35,6 +36,22 @@
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Project.Semester.Id)
+                </dd>
+
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Project.JudgesCount)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Project.JudgesCount)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Project.Averages)
+                </dt>
+                <dd class="col-sm-10">
+                    @foreach (var item in Model.Project.Averages)
+                    {
+                        @item.Key <text> : </text> @item.Value<br />
+                    }
                 </dd>
             </dl>
         </div>

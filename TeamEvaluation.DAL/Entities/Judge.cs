@@ -12,7 +12,10 @@ namespace TeamEvaluation.DAL.Entities
 
         public string Name { get; set; }
 
-        public virtual ICollection<Project> Projects { get; set; }
+        public int ProjectId { get; set; }
+
+        public decimal Evaluation { get; set; }
+        public virtual Project Project { get; set; }
 
 
     }
