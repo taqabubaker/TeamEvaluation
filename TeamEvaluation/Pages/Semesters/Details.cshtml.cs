@@ -28,7 +28,9 @@ namespace TeamEvaluation.Pages.Semesters
                 return NotFound();
             }
 
-            Semester = await _context.Semesters.FirstOrDefaultAsync(m => m.Id == id);
+            Semester = await _context.Semesters
+                .Include(p => p.Projects)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (Semester == null)
             {

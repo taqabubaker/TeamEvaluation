@@ -19,6 +19,15 @@
         </dd>
     </dl>
 </div>
+<br />
+<h3>Semester's Projects</h3>
+<div>
+    @foreach (var project in Model.Semester.Projects.OrderByDescending(x => x.Id))
+    {
+        <span class="badge badge-primary">@project.Name</span>
+    }
+</div>
+<br />
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Semester.Id">Edit</a> |
     <a asp-page="./Index">Back to List</a>

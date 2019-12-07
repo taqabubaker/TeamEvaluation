@@ -11,5 +11,6 @@ namespace TeamEvaluation.DAL.Entities
         public int Weight { get; set; }
         public int SemesterId { get; set; }        
         public Semester Semester { get; set; }
+        public List<Team> Teams { get; set; }
     }
 }

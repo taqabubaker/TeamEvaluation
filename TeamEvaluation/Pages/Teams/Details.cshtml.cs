@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using TeamEvaluation.DAL;
 using TeamEvaluation.DAL.Entities;
 
-namespace TeamEvaluation.Pages.Projects
+namespace TeamEvaluation.Pages.Teams
 {
     public class DetailsModel : PageModel
     {
@@ -19,7 +19,7 @@ namespace TeamEvaluation.Pages.Projects
             _context = context;
         }
 
-        public Project Project { get; set; }
+        public Team Team { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,12 +28,10 @@ namespace TeamEvaluation.Pages.Projects
                 return NotFound();
             }
 
-            Project = await _context.Projects
-                .Include(p => p.Semester)
-                .Include(t => t.Teams)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            Team = await _context.Teams
+                .Include(t => t.Project).FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Project == null)
+            if (Team == null)
             {
                 return NotFound();
             }
